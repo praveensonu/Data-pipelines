@@ -1,5 +1,4 @@
-from ast import Delete
-from pickle import APPEND
+
 import mysql.connector as mysql
 from mysql.connector import MySQLConnection
 import pandas as pd
@@ -40,4 +39,4 @@ def glucose_level(x):
 df['glucose_level'] = df['avg_glucose_level'].apply(glucose_level)
 
 
-df.to_sql('health_risk_data', engine, if_exists= APPEND, chunksize= 1000)
+df.to_sql('health_risk_data', engine, if_exists= 'append', chunksize= 1000)
