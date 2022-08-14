@@ -72,8 +72,8 @@ df['glucose_level'] = df['avg_glucose_level'].apply(glucose_level)
 #making a table in MySQL db using python
 def create_staging_table(cursor) -> None:
     cur.execute("""
-        DROP TABLE IF EXISTS test_risk_data;
-        CREATE UNLOGGED TABLE test_risk_data (
+        DROP TABLE IF EXISTS health_risk_data;
+        CREATE UNLOGGED TABLE health_risk_data (
             id                                     BIGINT, 
             gender                                 TEXT,
             age                                    INT,
@@ -90,3 +90,7 @@ def create_staging_table(cursor) -> None:
             glucose_level                          TEXT);""")
 
 df.to_sql('health_risk_data', engine, if_exists= 'append', chunksize= 1000, index = False) #use if_exists = 'replace' to replace
+
+#creating dataframe
+data={'Name':['Karan','Rohit','Sahil','Aryan'],'Age':[23,22,21,24]}
+df1=pd.DataFrame(data)
