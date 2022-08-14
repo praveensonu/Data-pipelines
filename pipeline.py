@@ -54,7 +54,7 @@ print(existing_dbs)
 #getting table into dataframe, we can also get data from multiple tables using sql syntax
 df = pd.read_sql('select * from healthcare_stroke_data', dbengine)
 
-#data operations
+#transformations
 df['age_group'] = pd.cut(df['age'], bins=[0,30,60,100], labels=["young","middle_aged","old"])
 df.age_group.dropna(inplace = True)
 df['bmi'].interpolate(inplace=True)
@@ -89,8 +89,12 @@ def create_staging_table(cursor) -> None:
             age_group                              TEXT,
             glucose_level                          TEXT);""")
 
+#loading data into mysql with python
 df.to_sql('health_risk_data', engine, if_exists= 'append', chunksize= 1000, index = False) #use if_exists = 'replace' to replace
 
 #creating dataframe
 data={'Name':['Karan','Rohit','Sahil','Aryan'],'Age':[23,22,21,24]}
 df1=pd.DataFrame(data)
+
+#loading new dataframe into mysql with python
+df1.to_sql('dataframe', engine, if_exists= 'replace', chunksize= 1000, index = False)
